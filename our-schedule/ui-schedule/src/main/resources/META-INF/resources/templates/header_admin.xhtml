@@ -1,0 +1,38 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <div class="card">
+        <h:form>
+            <p:growl id="messages"/>
+
+            <p:menubar>
+
+                <p:submenu label="Users" icon="pi pi-fw pi-user">
+                    <p:menuitem value="New" icon="pi pi-fw pi-user-plus"/>
+                    <p:menuitem value="Delete" icon="pi pi-fw pi-user-minus"/>
+                    <p:submenu label="Search" icon="pi pi-fw pi-users">
+                        <p:submenu label="Filter" icon="pi pi-fw pi-filter">
+                            <p:menuitem value="Print" icon="pi pi-fw pi-print"/>
+                        </p:submenu>
+                        <p:menuitem value="List" icon="pi pi-fw pi-bars"/>
+                    </p:submenu>
+                </p:submenu>
+
+                <p:divider layout="vertical"/>
+
+                <f:facet name="options">
+                    <div class="ui-input-icon-left mr-2">
+                        <i class="pi pi-fw pi-search" />
+                        <p:inputText placeholder="Search"/>
+                    </div>
+                    <p:button value="Logout" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"/>
+                </f:facet>
+            </p:menubar>
+        </h:form>
+    </div>
+
+</ui:composition>
