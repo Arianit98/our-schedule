@@ -10,15 +10,6 @@
             <p:growl id="messages"/>
 
             <p:menubar>
-                <p:submenu label="My Schedule" icon="pi pi-fw pi-file">
-                    <p:submenu label="New" icon="pi pi-fw pi-plus">
-                        <p:menuitem value="Bookmark" icon="pi pi-fw pi-bookmark"/>
-                        <p:menuitem value="Video" icon="pi pi-fw pi-video"/>
-                    </p:submenu>
-                    <p:menuitem value="Delete" icon="pi pi-fw pi-trash"/>
-                    <p:divider />
-                    <p:menuitem value="Export" icon="pi pi-fw pi-external-link"/>
-                </p:submenu>
 
                 <p:submenu label="My Account" icon="pi pi-fw pi-user">
                     <p:menuitem value="New" icon="pi pi-fw pi-user-plus"/>
@@ -37,10 +28,11 @@
 
                 <f:facet name="options">
                     <div class="ui-input-icon-left mr-2">
-                        <i class="pi pi-fw pi-search" />
+                        <i class="pi pi-fw pi-search"/>
                         <p:inputText placeholder="Search"/>
                     </div>
-                    <p:button value="Logout" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"/>
+                    <p:commandButton value="Logout" icon="pi pi-fw pi-sign-out" action="#{loginController.logout()}"
+                                     styleClass="ui-button-info"/>
                 </f:facet>
             </p:menubar>
         </h:form>

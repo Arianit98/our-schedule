@@ -1,4 +1,4 @@
-package com.arianit;
+package com.arianit.rest.schedule;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 

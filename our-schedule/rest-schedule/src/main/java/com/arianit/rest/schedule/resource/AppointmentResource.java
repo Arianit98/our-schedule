@@ -1,5 +1,7 @@
-package com.arianit;
+package com.arianit.rest.schedule.resource;
 
+import com.arianit.rest.schedule.model.Appointment;
+import com.arianit.rest.schedule.service.AppointmentService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -13,15 +15,15 @@ import java.util.List;
 @Path("api/appointments")
 @Produces(MediaType.APPLICATION_JSON)
 public class AppointmentResource {
-    
+
     @Inject
     Logger logger;
-    
+
     @Inject
     AppointmentService service;
 
     @GET
-    public Response getAllAppointments(){
+    public Response getAllAppointments() {
         List<Appointment> appointments = service.findAllAppointments();
         logger.debug("Total number of Appointments " + appointments);
         return Response.ok(appointments).build();

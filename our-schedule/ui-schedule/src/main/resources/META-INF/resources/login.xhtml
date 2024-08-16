@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+
+<h:body>
+    <div id="container"
+         style="display: flex; justify-content: center; align-content: center; flex-direction: row">
+
+        <div class="card" style="width: 400px; height: 200px;">
+
+            <h:form id="form" style="width:300px; margin-bottom: 10px; margin-top: 50px">
+                <h1 style="text-align: center">Our Schedule</h1>
+                <div class="field grid">
+                    <div class="col">
+                        <p:inputText id="username" placeholder="Username" value="#{loginController.username}"
+                                     style="margin-bottom: 5px; width: 300px; height: 50px"/>
+                    </div>
+                </div>
+                <div class="field grid">
+                    <div class="col">
+                        <p:password id="password" placeholder="Password" value="#{loginController.password}"
+                                    style="margin-bottom: 15px; width: 300px; height: 50px"/>
+                    </div>
+                </div>
+                <div class="field grid">
+                    <div class="col">
+                        <p:commandButton update="@form" value="Login" action="#{loginController.login()}"
+                                         ajax="true"
+                                         style="margin-bottom: 10px; width: 300px; height: 50px;font-size: 25px"/>
+                    </div>
+                </div>
+                <div class="field grid" style="text-align: center;margin-bottom: 25px">
+                    <p:link style="font-size: 13px;" value="Forgot your password?"/>
+                </div>
+                <hr/>
+                <div class="field grid">
+                    <div class="col">
+                        <p:commandButton update="@form" value="Sign Up"
+                                         style="margin-top: 25px; width: 300px; height: 50px;font-size: 25px;background-color: darkseagreen"/>
+                    </div>
+                </div>
+
+            </h:form>
+        </div>
+    </div>
+</h:body>
+</html>

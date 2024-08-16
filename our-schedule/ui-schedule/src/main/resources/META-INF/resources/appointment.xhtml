@@ -11,93 +11,75 @@
 <h:body>
     <ui:include src="templates/header.xhtml"/>
 
+    <h3> Hello #{appointmentController.currentUser.name}</h3>
+
     <div class="card crud-demo" style="width: 50%; margin: auto">
         <h:form id="form">
             <p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true"/>
 
             <h:panelGrid columns="2" cellpadding="5" style="margin: auto">
                 <p:outputLabel for="inline" value=""/>
-                <p:calendar id="inline" value="#{appointmentController.date}" mode="inline">
-                    <p:ajax event="dateSelect" listener="#{appointmentController.onDateSelect}" update="appointmentsTable"/>
+                <p:calendar id="inline" value="#{appointmentController.selectedDate}" mode="inline">
+                    <p:ajax event="dateSelect" listener="#{appointmentController.onDateSelect}"
+                            update="appointmentsTable"/>
                 </p:calendar>
             </h:panelGrid>
 
             <p:toolbar>
                 <p:toolbarGroup>
                     <p:commandButton value="New" icon="pi pi-plus" actionListener="#{appointmentController.openNew}"
-                                     update=":dialogs:manage-appointment-content" oncomplete="PF('manageAppointmentDialog').show()"
+                                     update=":dialogs:manage-appointment-content"
+                                     oncomplete="PF('manageAppointmentDialog').show()"
                                      styleClass="ui-button-success" style="margin-right: .5rem">
-                        <p:resetInput target=":dialogs:manage-appointment-content" />
+                        <p:resetInput target=":dialogs:manage-appointment-content"/>
                     </p:commandButton>
                 </p:toolbarGroup>
             </p:toolbar>
 
             <p:dataTable id="appointmentsTable" widgetVar="appointmentsTable" editable="true"
-                         var="appointment" value="#{appointmentController.getAppointmentsForDate()}" style="margin: auto;"
-            reflow="true" styleClass="products-table" rowKey="#{appointment.id}">
+                         var="appointment" value="#{appointmentController.getAppointmentsForDate()}"
+                         style="margin: auto;"
+                         reflow="true" styleClass="products-table" rowKey="#{appointment.id}">
 
                 <f:facet name="header">
                     <div class="appointments-table-header">
                         <span style="font-weight: bold">Appointments</span>
-                        <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
-                        <p:inputText id="globalFilter" onkeyup="PF('appointmentsTable').filter()" placeholder="Search" />
-                    </span>
                     </div>
                 </f:facet>
 
                 <p:column headerText="Title">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{appointment.title}"/></f:facet>
-                        <f:facet name="input"><p:inputText value="#{appointment.title}" style="width:100%"
-                                                           label="Title"/></f:facet>
-                    </p:cellEditor>
+                    <h:outputText value="#{appointment.title}"/>
                 </p:column>
 
                 <p:column headerText="Description">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{appointment.description}"/></f:facet>
-                        <f:facet name="input"><p:inputText value="#{appointment.description}" style="width:100%"
-                                                           label="Description"/></f:facet>
-                    </p:cellEditor>
+                    <h:outputText value="#{appointment.description}"/>
                 </p:column>
 
                 <p:column headerText="Start Time">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{appointment.startTime}"/></f:facet>
-                        <f:facet name="input">
-                                <p:datePicker id="startTime" value="#{appointment.startTime}" style="width: 100%"
-                                              label="Start Time"/></f:facet>
-                    </p:cellEditor>
+                    <h:outputText value="#{appointment.startTime}"/>
                 </p:column>
 
                 <p:column headerText="End Time">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{appointment.endTime}"/></f:facet>
-                        <f:facet name="input">
-                            <p:datePicker id="endTime" value="#{appointment.endTime}" style="width: 100%"
-                                          label="End Time"/></f:facet>
-                    </p:cellEditor>
+                    <h:outputText value="#{appointment.endTime}"/>
                 </p:column>
 
                 <p:column headerText="Location">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{appointment.location}"/></f:facet>
-                        <f:facet name="input"><p:inputText value="#{appointment.location}" style="width:100%"
-                                                           label="Location"/></f:facet>
-                    </p:cellEditor>
+                    <h:outputText value="#{appointment.location}"/>
                 </p:column>
 
                 <p:column exportable="false" ariaHeaderText="Actions">
                     <p:commandButton icon="pi pi-pencil" update=":dialogs:manage-appointment-content"
                                      oncomplete="PF('manageAppointmentDialog').show()"
                                      styleClass="edit-button rounded-button ui-button-success" process="@this">
-                        <f:setPropertyActionListener value="#{appointment}" target="#{appointmentController.selectedAppointment}" />
-                        <p:resetInput target=":dialogs:manage-appointment-content" />
+                        <f:setPropertyActionListener value="#{appointment}"
+                                                     target="#{appointmentController.selectedAppointment}"/>
+                        <p:resetInput target=":dialogs:manage-appointment-content"/>
                     </p:commandButton>
                     <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
                                      process="@this"
                                      oncomplete="PF('deleteAppointmentDialog').show()">
-                        <f:setPropertyActionListener value="#{appointment}" target="#{appointmentController.selectedAppointment}" />
+                        <f:setPropertyActionListener value="#{appointment}"
+                                                     target="#{appointmentController.selectedAppointment}"/>
                     </p:commandButton>
                 </p:column>
 
@@ -111,50 +93,57 @@
                     <p:outputPanel rendered="#{not empty appointmentController.selectedAppointment}">
                         <div class="field">
                             <p:outputLabel for="titleDlgInput">Title</p:outputLabel>
-                            <p:inputText id="titleDlgInput" value="#{appointmentController.selectedAppointment.title}" required="true" />
+                            <p:inputText id="titleDlgInput" value="#{appointmentController.selectedAppointment.title}"
+                                         required="true"/>
                         </div>
                         <div class="field">
                             <p:outputLabel for="descriptionDlgInput">Description</p:outputLabel>
-                            <p:inputTextarea id="descriptionDlgInput" value="#{appointmentController.selectedAppointment.description}" />
+                            <p:inputTextarea id="descriptionDlgInput"
+                                             value="#{appointmentController.selectedAppointment.description}"/>
                         </div>
                         <div class="formgrid grid">
                             <div class="field col">
                                 <p:outputLabel for="startTimeDlgInput">Start Time</p:outputLabel>
-                                <p:datePicker id="startTimeDlgInput" value="#{appointmentController.selectedAppointment.startTime}"/>
+                                <p:datePicker id="startTimeDlgInput"
+                                              value="#{appointmentController.selectedAppointment.startTime}"/>
                             </div>
                             <div class="field col">
                                 <p:outputLabel for="endTimeDlgInput">End time</p:outputLabel>
-                                <p:datePicker id="endTimeDlgInput" value="#{appointmentController.selectedAppointment.endTime}"/>
+                                <p:datePicker id="endTimeDlgInput"
+                                              value="#{appointmentController.selectedAppointment.endTime}"/>
                             </div>
                         </div>
                         <div class="field">
                             <p:outputLabel for="locationDlgInput">Location</p:outputLabel>
-                            <p:inputText id="locationDlgInput" value="#{appointmentController.selectedAppointment.location}" />
+                            <p:inputText id="locationDlgInput"
+                                         value="#{appointmentController.selectedAppointment.location}"/>
                         </div>
                     </p:outputPanel>
                 </p:outputPanel>
 
                 <f:facet name="footer">
-                    <p:commandButton value="Save" icon="pi pi-check" actionListener="#{appointmentController.saveAppointment}"
-                                     update="manage-appointment-content" process="manage-appointment-content @this" />
+                    <p:commandButton value="Save" icon="pi pi-check"
+                                     actionListener="#{appointmentController.saveAppointment}"
+                                     update="manage-appointment-content" process="manage-appointment-content @this"/>
                     <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageAppointmentDialog').hide()"
-                                     class="ui-button-secondary" type="button" />
+                                     class="ui-button-secondary" type="button"/>
                 </f:facet>
             </p:dialog>
 
             <p:confirmDialog widgetVar="deleteAppointmentDialog" showEffect="fade" width="300"
                              message="Delete the product?" header="Confirm" severity="warn">
-                <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{appointmentController.deleteAppointment}"
+                <p:commandButton value="Yes" icon="pi pi-check"
+                                 actionListener="#{appointmentController.deleteAppointment}"
                                  process="@this"
-                                 oncomplete="PF('deleteAppointmentDialog').hide()" />
+                                 oncomplete="PF('deleteAppointmentDialog').hide()"/>
                 <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
-                                 onclick="PF('deleteAppointmentDialog').hide()" />
+                                 onclick="PF('deleteAppointmentDialog').hide()"/>
             </p:confirmDialog>
 
             <p:confirmDialog global="true" showEffect="fade" width="300">
-                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
                 <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
-                                 icon="pi pi-times" />
+                                 icon="pi pi-times"/>
             </p:confirmDialog>
         </h:form>
     </div>
