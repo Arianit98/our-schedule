@@ -14,6 +14,7 @@ package com.arianit.ui.schedule.api;
 
 import com.arianit.ui.schedule.model.User;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.rest.client.annotation.RegisterProvider;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
@@ -40,11 +41,11 @@ public interface UsersApi {
     User apiUsersIdGet(@PathParam("id") Long id) throws ApiException, ProcessingException;
 
     @POST
-    @Consumes({"application/json"})
+    @Consumes(MediaType.APPLICATION_JSON)
     void apiUsersPost(User user) throws ApiException, ProcessingException;
 
     @PUT
-    @Consumes({"application/json"})
+    @Consumes(MediaType.APPLICATION_JSON)
     User apiUsersPut(User user) throws ApiException, ProcessingException;
 }
 

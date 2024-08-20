@@ -21,21 +21,13 @@ public class Util {
                 getExternalContext().getRequest();
     }
 
-    public static String getUserName() {
+    public static Long getUserId() {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        return session.getAttribute("username").toString();
+        return (Long) session.getAttribute("userId");
     }
 
     public static User getUser() {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         return (User) session.getAttribute("user");
-    }
-
-    public static String getUserId() {
-        HttpSession session = getSession();
-        if (session != null)
-            return (String) session.getAttribute("userid");
-        else
-            return null;
     }
 }
