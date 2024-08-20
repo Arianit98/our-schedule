@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 
 </h:head>
@@ -9,10 +10,10 @@
 <h:body>
     <div id="container"
          style="display: flex; justify-content: center; align-content: center; flex-direction: row">
-
         <div class="card" style="width: 400px; height: 200px;">
-
             <h:form id="form" style="width:300px; margin-bottom: 10px; margin-top: 50px">
+                <p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true"/>
+
                 <h1 style="text-align: center">Our Schedule</h1>
                 <div class="field grid">
                     <div class="col">
@@ -39,13 +40,84 @@
                 <hr/>
                 <div class="field grid">
                     <div class="col">
-                        <p:commandButton update="@form" value="Sign Up"
-                                         style="margin-top: 25px; width: 300px; height: 50px;font-size: 25px;background-color: darkseagreen"/>
+                        <p:commandButton value="Sign Up" actionListener="#{loginController.openNew}"
+                                         update=":formDialogs:manage-user-content"
+                                         oncomplete="PF('manageUserDialog').show()"
+                                         style="margin-top: 25px; width: 300px; height: 50px;font-size: 25px;background-color: darkseagreen">
+                            <p:resetInput target=":formDialogs:manage-user-content"/>
+                        </p:commandButton>
                     </div>
                 </div>
-
             </h:form>
+
         </div>
     </div>
+    <h:form id="formDialogs">
+        <p:dialog header="User Details" showEffect="fade" modal="true"
+                  widgetVar="manageUserDialog"
+                  responsive="true">
+            <p:outputPanel id="manage-user-content" class="ui-fluid">
+                <p:outputPanel rendered="#{loginController.selectedUser!=null}">
+                    <div class="field">
+                        <p:outputLabel for="nameDlgInput">Name</p:outputLabel>
+                        <p:inputText id="nameDlgInput"
+                                     value="#{loginController.selectedUser.name}"
+                                     required="true"/>
+                    </div>
+                    <div class="field">
+                        <p:outputLabel for="surnameDlgInput">Surname</p:outputLabel>
+                        <p:inputText id="surnameDlgInput"
+                                     value="#{loginController.selectedUser.surname}"
+                                     required="true"/>
+                    </div>
+                    <div class="field">
+                        <p:outputLabel for="emailDlgInput">Email</p:outputLabel>
+                        <p:inputText id="emailDlgInput"
+                                     value="#{loginController.selectedUser.email}"
+                                     required="true"/>
+                    </div>
+                    <div class="field">
+                        <p:messages id="usernameMessages"/>
+                        <p:outputLabel for="usernameDlgInput" styleClass="block">Username</p:outputLabel>
+                        <p:inputText id="usernameDlgInput" styleClass="block ui-state-error"
+                                     value="#{loginController.selectedUser.username}"
+                                     required="true" validator="usernameValidator">
+                            <p:ajax update="@this usernameMessages"/>
+                        </p:inputText>
+                    </div>
+                    <div class="field grid">
+                        <p:outputLabel for="pwd1" styleClass="col-fixed" style="width:100px" value="Password"/>
+                        <div class="col">
+                            <p:password id="pwd1" value="#{loginController.selectedUser.password}" match="pwd2"
+                                        label="Password 1" required="true" feedback="true"/>
+                        </div>
+                    </div>
+                    <div class="field grid">
+                        <p:outputLabel for="pwd2" styleClass="col-fixed" style="width:100px" value="Password"/>
+                        <div class="col">
+                            <p:password id="pwd2" value="#{loginController.selectedUser.password}"
+                                        label="Password 2" placeholder="Please repeat your password!"
+                                        required="true"/>
+                        </div>
+                    </div>
+                    <div class="field grid">
+                        <p:outputLabel for="birthdayDlgInput">Birthday</p:outputLabel>
+                        <p:datePicker id="birthdayDlgInput"
+                                      value="#{loginController.selectedUser.birthday}"/>
+                    </div>
+                </p:outputPanel>
+            </p:outputPanel>
+
+            <f:facet name="footer">
+                <p:commandButton value="Cancel" icon="pi pi-times"
+                                 onclick="PF('manageUserDialog').hide()"
+                                 class="ui-button-secondary" type="button"/>
+                <p:commandButton value="Save" icon="pi pi-check"
+                                 actionListener="#{loginController.saveUser}"
+                                 update="manage-user-content"
+                                 process="manage-user-content @this"/>
+            </f:facet>
+        </p:dialog>
+    </h:form>
 </h:body>
 </html>

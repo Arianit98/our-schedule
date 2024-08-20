@@ -1,7 +1,6 @@
 <ui:composition
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:f="http://java.sun.com/jsf/core"
         xmlns:p="http://primefaces.org/ui"
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
@@ -11,7 +10,7 @@
 
             <p:menubar>
 
-                <p:submenu label="My Account" icon="pi pi-fw pi-user">
+                <p:submenu label="#{appointmentController.currentUser.name}" icon="pi pi-fw pi-user">
                     <p:menuitem value="New" icon="pi pi-fw pi-user-plus"/>
                     <p:menuitem value="Delete" icon="pi pi-fw pi-user-minus"/>
                     <p:submenu label="Search" icon="pi pi-fw pi-users">
@@ -20,20 +19,15 @@
                         </p:submenu>
                         <p:menuitem value="List" icon="pi pi-fw pi-bars"/>
                     </p:submenu>
+                    <p:menuitem>
+                        <p:commandButton value="Logout" icon="pi pi-fw pi-sign-out" action="#{loginController.logout}"
+                                         styleClass="ui-button-info"/>
+                    </p:menuitem>
                 </p:submenu>
 
                 <p:divider layout="vertical"/>
 
                 <p:menuitem value="Admin" icon="pi pi-fw pi-user" action="#{indexAdminController.indexAdmin}"/>
-
-                <f:facet name="options">
-                    <div class="ui-input-icon-left mr-2">
-                        <i class="pi pi-fw pi-search"/>
-                        <p:inputText placeholder="Search"/>
-                    </div>
-                    <p:commandButton value="Logout" icon="pi pi-fw pi-sign-out" action="#{loginController.logout()}"
-                                     styleClass="ui-button-info"/>
-                </f:facet>
             </p:menubar>
         </h:form>
     </div>

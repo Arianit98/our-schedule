@@ -15,8 +15,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.logging.Logger;
+import org.primefaces.PrimeFaces;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,9 +34,10 @@ public class LoginController implements Serializable {
     UsersApi api;
     @Inject
     Logger logger;
-    List<User> users;
+    List<User> users = new ArrayList<>();
     private String username;
     private String password;
+    private User selectedUser;
 
     @PostConstruct
     public void init() {
@@ -42,7 +45,7 @@ public class LoginController implements Serializable {
             users = api.apiUsersGet();
         } catch (ApiException e) {
             logger.error("init() =>" + e);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Could not get appointments!"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Could not get users!"));
         }
     }
 
@@ -56,32 +59,62 @@ public class LoginController implements Serializable {
             if (currentUserOpt.isEmpty()) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
                         "Login failed!",
-                        "Username is incorrect!"));
-                return "login";
+                        "There is no user with this username!"));
+                PrimeFaces.current().ajax().update("form:msgs");
+                return "/login.xhtml";
             }
             User currentUser = currentUserOpt.get();
             if (currentUser.getPassword().equals(password)) {
                 HttpSession session = Util.getSession();
-                session.setAttribute("username", username);
                 session.setAttribute("user", currentUser);
                 session.setAttribute("userId", currentUser.getId());
-                return "appointment";
+                return "/appointment.xhtml?faces-redirect=true";
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
                         "Login failed!",
                         "Wrong password!"));
-                return "login";
+                PrimeFaces.current().ajax().update("form:msgs");
+                return "/login.xhtml";
             }
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
                 "Login failed!",
                 "The username or password is incorrect!"));
-        return "login";
+        return "/login.xhtml";
     }
 
     public String logout() {
         HttpSession session = Util.getSession();
         session.invalidate();
-        return "login";
+        return "/login.xhtml?faces-redirect=true";
+    }
+
+    public void openNew() {
+        User user = new User();
+        user.setActive(true);
+        selectedUser = user;
+    }
+
+    public void saveUser() {
+        if (selectedUser.getId() == null) {
+            try {
+                api.apiUsersPost(selectedUser);
+                users.add(selectedUser);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User Added"));
+            } catch (ApiException e) {
+                logger.error("saveUser() =>" + e);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Could not add user!"));
+            }
+        } else {
+            try {
+                api.apiUsersPut(selectedUser);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User Updated"));
+            } catch (ApiException e) {
+                logger.error("saveUser() =>" + e);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Could not update user!"));
+            }
+        }
+        PrimeFaces.current().executeScript("PF('manageUserDialog').hide()");
+        PrimeFaces.current().ajax().update("form:msgs");
     }
 }

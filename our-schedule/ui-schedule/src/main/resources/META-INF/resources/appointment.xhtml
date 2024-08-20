@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
 
@@ -10,8 +11,6 @@
 
 <h:body>
     <ui:include src="templates/header.xhtml"/>
-
-    <h3> Hello #{appointmentController.currentUser.name}</h3>
 
     <div class="card crud-demo" style="width: 50%; margin: auto">
         <h:form id="form">

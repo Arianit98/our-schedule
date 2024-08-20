@@ -23,8 +23,8 @@ public class AuthFilter implements Filter {
         HttpSession ses = req.getSession(false);
         //  allow user to proceed if url is login.xhtml or user logged in or user is accessing any page in //public folder
         String reqURI = req.getRequestURI();
-        if (reqURI.contains("/login.xhtml") || (ses != null && ses.getAttribute("username") != null)
-                || reqURI.contains("/public/") || reqURI.contains("javax.faces.resource"))
+        if (reqURI.contains("/login.xhtml") || (ses != null && ses.getAttribute("userId") != null)
+                || reqURI.contains("/public/") || reqURI.contains("jakarta.faces.resource") || reqURI.contains("javax.faces.resource"))
             filterChain.doFilter(servletRequest, servletResponse);
         else   // user didn't log in but asking for a page that is not allowed so take user to login page
             res.sendRedirect(req.getContextPath() + "/login.xhtml");  // Anonymous user. Redirect to login page

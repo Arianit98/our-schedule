@@ -13,15 +13,10 @@
 package com.arianit.ui.schedule.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-
-@Getter
-@Setter
 public class Appointment {
 
     @JsonProperty("id")
@@ -45,6 +40,9 @@ public class Appointment {
     @JsonProperty("endTime")
     private LocalTime endTime;
 
+    @JsonProperty("user")
+    private User user;
+
     /**
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
@@ -56,9 +54,41 @@ public class Appointment {
         return o.toString().replace("\n", "\n    ");
     }
 
+    /**
+     * Get id
+     *
+     * @return id
+     **/
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * Set id
+     **/
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Appointment id(Long id) {
         this.id = id;
         return this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return title
+     **/
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * Set title
+     **/
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Appointment title(String title) {
@@ -66,9 +96,41 @@ public class Appointment {
         return this;
     }
 
+    /**
+     * Get description
+     *
+     * @return description
+     **/
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * Set description
+     **/
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Appointment description(String description) {
         this.description = description;
         return this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return location
+     **/
+    public String getLocation() {
+        return location;
+    }
+
+    /**
+     * Set location
+     **/
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public Appointment location(String location) {
@@ -76,9 +138,41 @@ public class Appointment {
         return this;
     }
 
+    /**
+     * Get date
+     *
+     * @return date
+     **/
+    public LocalDate getDate() {
+        return date;
+    }
+
+    /**
+     * Set date
+     **/
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     public Appointment date(LocalDate date) {
         this.date = date;
         return this;
+    }
+
+    /**
+     * Get startTime
+     *
+     * @return startTime
+     **/
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    /**
+     * Set startTime
+     **/
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
     }
 
     public Appointment startTime(LocalTime startTime) {
@@ -86,8 +180,45 @@ public class Appointment {
         return this;
     }
 
+    /**
+     * Get endTime
+     *
+     * @return endTime
+     **/
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    /**
+     * Set endTime
+     **/
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
     public Appointment endTime(LocalTime endTime) {
         this.endTime = endTime;
+        return this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return user
+     **/
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * Set user
+     **/
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Appointment user(User user) {
+        this.user = user;
         return this;
     }
 
@@ -106,6 +237,7 @@ public class Appointment {
         sb.append("    date: ").append(toIndentedString(date)).append("\n");
         sb.append("    startTime: ").append(toIndentedString(startTime)).append("\n");
         sb.append("    endTime: ").append(toIndentedString(endTime)).append("\n");
+        sb.append("    user: ").append(toIndentedString(user)).append("\n");
         sb.append("}");
         return sb.toString();
     }

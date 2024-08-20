@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Named
 @SessionScoped
@@ -48,7 +49,7 @@ public class AppointmentController implements Serializable {
         }
         selectedDate = LocalDate.now();
         try {
-            appointments = api.apiAppointmentsGet();
+            appointments = api.apiAppointmentsGet().stream().filter(appointment -> appointment.getUser().getId().equals(currentUser.getId())).collect(Collectors.toList());
         } catch (ApiException e) {
             logger.error("init() =>" + e);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Could not get appointments!"));
@@ -67,6 +68,7 @@ public class AppointmentController implements Serializable {
     public void openNew() {
         Appointment appointment = new Appointment();
         appointment.setDate(selectedDate);
+        appointment.setUser(currentUser);
         selectedAppointment = appointment;
     }
 
@@ -74,7 +76,7 @@ public class AppointmentController implements Serializable {
         if (selectedAppointment.getId() == null) {
             try {
                 api.apiAppointmentsPost(selectedAppointment);
-                appointments.add(selectedAppointment);
+                appointments = api.apiAppointmentsGet().stream().filter(appointment -> appointment.getUser().getId().equals(currentUser.getId())).collect(Collectors.toList());
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Appointment Added"));
             } catch (ApiException e) {
                 logger.error("saveAppointment() =>" + e);
