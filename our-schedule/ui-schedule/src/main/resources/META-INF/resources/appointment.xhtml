@@ -12,7 +12,7 @@
 <h:body>
     <ui:include src="templates/header.xhtml"/>
 
-    <div class="card crud-demo" style="width: 50%; margin: auto">
+    <div class="card crud-demo" style="width: 70%; margin: auto">
         <h:form id="form">
             <p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true"/>
 
@@ -46,6 +46,14 @@
                     </div>
                 </f:facet>
 
+                <p:column headerText="Start" style="width: 7%">
+                    <h:outputText value="#{appointment.startTime}"/>
+                </p:column>
+
+                <p:column headerText="End" style="width: 7%;">
+                    <h:outputText value="#{appointment.endTime}"/>
+                </p:column>
+
                 <p:column headerText="Title">
                     <h:outputText value="#{appointment.title}"/>
                 </p:column>
@@ -54,16 +62,18 @@
                     <h:outputText value="#{appointment.description}"/>
                 </p:column>
 
-                <p:column headerText="Start Time">
-                    <h:outputText value="#{appointment.startTime}"/>
-                </p:column>
-
-                <p:column headerText="End Time">
-                    <h:outputText value="#{appointment.endTime}"/>
-                </p:column>
-
                 <p:column headerText="Location">
                     <h:outputText value="#{appointment.location}"/>
+                </p:column>
+
+                <p:column style="width: 20%">
+                    <p:avatar styleClass="mr-2" shape="circle">
+                        <p:graphicImage name="images/#{appointmentController.currentUser.image}"
+                                        alt="#{appointmentController.currentUser.getInitials()}"
+                                        style="vertical-align: middle"/>
+                    </p:avatar>
+                    <h:outputText style="vertical-align: middle;margin-left: .5rem"
+                                  value="#{appointmentController.currentUser.name.concat(' ').concat(appointmentController.currentUser.surname)}"/>
                 </p:column>
 
                 <p:column exportable="false" ariaHeaderText="Actions">

@@ -41,6 +41,9 @@ public class User {
     @JsonProperty("active")
     private Boolean active;
 
+    @JsonProperty("image")
+    private String image;
+
     /**
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
@@ -221,6 +224,31 @@ public class User {
     }
 
     /**
+     * Get image
+     *
+     * @return image
+     **/
+    public String getImage() {
+        return image;
+    }
+
+    /**
+     * Set active
+     **/
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public User image(String image) {
+        this.image = image;
+        return this;
+    }
+
+    public String getInitials() {
+        return "" + name.charAt(0) + surname.charAt(0);
+    }
+
+    /**
      * Create a string representation of this pojo.
      **/
     @Override
@@ -236,6 +264,7 @@ public class User {
         sb.append("    password: ").append(toIndentedString(password)).append("\n");
         sb.append("    birthday: ").append(toIndentedString(birthday)).append("\n");
         sb.append("    active: ").append(toIndentedString(active)).append("\n");
+        sb.append("    image: ").append(toIndentedString(image)).append("\n");
         sb.append("}");
         return sb.toString();
     }

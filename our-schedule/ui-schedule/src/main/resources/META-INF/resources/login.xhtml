@@ -58,6 +58,15 @@
                   responsive="true">
             <p:outputPanel id="manage-user-content" class="ui-fluid">
                 <p:outputPanel rendered="#{loginController.selectedUser!=null}">
+
+                    <div class="field">
+                        <p:outputLabel for="picDlgInput">Profile picture</p:outputLabel>
+                        <p:fileUpload id="picDlgInput" listener="#{loginController.handleFileUpload}" mode="advanced"
+                                      dragDropSupport="true"
+                                      update=":form:msgs">
+                            <p:validateFile allowTypes="/(\.|\/)(gif|jpeg|jpg|png)$/"/>
+                        </p:fileUpload>
+                    </div>
                     <div class="field">
                         <p:outputLabel for="nameDlgInput">Name</p:outputLabel>
                         <p:inputText id="nameDlgInput"

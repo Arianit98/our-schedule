@@ -13,10 +13,15 @@ import jakarta.inject.Named;
 import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.io.IOUtils;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.logging.Logger;
 import org.primefaces.PrimeFaces;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.file.UploadedFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +104,7 @@ public class LoginController implements Serializable {
         if (selectedUser.getId() == null) {
             try {
                 api.apiUsersPost(selectedUser);
-                users.add(selectedUser);
+                users = api.apiUsersGet();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("User Added"));
             } catch (ApiException e) {
                 logger.error("saveUser() =>" + e);
@@ -116,5 +121,17 @@ public class LoginController implements Serializable {
         }
         PrimeFaces.current().executeScript("PF('manageUserDialog').hide()");
         PrimeFaces.current().ajax().update("form:msgs");
+    }
+
+    public void handleFileUpload(FileUploadEvent event) {
+        UploadedFile image = event.getFile();
+        File file = new File("src/main/resources/META-INF/resources/images/" + image.getFileName());
+        try {
+            IOUtils.copy(image.getInputStream(), new FileOutputStream(file));
+        } catch (Exception e) {
+            logger.error("handleFileUpload() =>" + e);
+            throw new RuntimeException(e);
+        }
+        selectedUser.setImage(image.getFileName());
     }
 }
