@@ -2,33 +2,101 @@
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:p="http://primefaces.org/ui"
-        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
 
     <div class="card">
         <h:form>
-            <p:growl id="messages"/>
+            <p:growl id="msgs"/>
 
             <p:menubar>
 
                 <p:submenu label="#{appointmentController.currentUser.name}" icon="pi pi-fw pi-user">
-                    <p:menuitem value="New" icon="pi pi-fw pi-user-plus"/>
-                    <p:menuitem value="Delete" icon="pi pi-fw pi-user-minus"/>
-                    <p:submenu label="Search" icon="pi pi-fw pi-users">
-                        <p:submenu label="Filter" icon="pi pi-fw pi-filter">
-                            <p:menuitem value="Print" icon="pi pi-fw pi-print"/>
-                        </p:submenu>
-                        <p:menuitem value="List" icon="pi pi-fw pi-bars"/>
-                    </p:submenu>
+                    <p:menuitem value="Edit" icon="pi pi-pencil"
+                                update=":formDialogs:manage-user-content"
+                                oncomplete="PF('manageUserDialog').show()"
+                                styleClass="edit-button rounded-button ui-button-success" process="@this">
+                    </p:menuitem>
                     <p:menuitem>
-                        <p:commandButton value="Logout" icon="pi pi-fw pi-sign-out" action="#{loginController.logout}"
+                        <p:commandButton value="Logout" icon="pi pi-fw pi-sign-out" action="#{headerController.logout}"
                                          styleClass="ui-button-info"/>
                     </p:menuitem>
                 </p:submenu>
 
                 <p:divider layout="vertical"/>
-
-                <p:menuitem value="Admin" icon="pi pi-fw pi-user" action="#{indexAdminController.indexAdmin}"/>
             </p:menubar>
+        </h:form>
+        <h:form id="formDialogs">
+            <p:dialog header="User Details" showEffect="fade" modal="true"
+                      id="manageUserDialog"
+                      widgetVar="manageUserDialog"
+                      responsive="true">
+                <p:outputPanel id="manage-user-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{headerController.currentUser!=null}">
+
+                        <div style="display: flex; justify-content: space-between">
+                            <div class="field" style="align-self: center">
+                                <p:avatar styleClass="mr-2" shape="circle" size="xlarge">
+                                    <p:graphicImage name="images/#{appointmentController.currentUser.image}"
+                                                    id="profile-pic"
+                                                    alt="#{appointmentController.currentUser.getInitials()}"
+                                                    style="vertical-align: middle"/>
+                                </p:avatar>
+                            </div>
+                            <div class="field">
+                                <p:fileUpload id="picDlgInput" listener="#{headerController.handleFileUpload}"
+                                              mode="advanced"
+                                              chooseButtonTitle="Choose profile pic"
+                                              dragDropSupport="true"
+                                              update=":form:msgs :formDialogs:profile-pic">
+                                    <p:validateFile allowTypes="/(\.|\/)(gif|jpeg|jpg|png)$/"/>
+                                </p:fileUpload>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="nameDlgInput">Name</p:outputLabel>
+                            <p:inputText id="nameDlgInput"
+                                         value="#{headerController.currentUser.name}"
+                                         required="true"/>
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="surnameDlgInput">Surname</p:outputLabel>
+                            <p:inputText id="surnameDlgInput"
+                                         value="#{headerController.currentUser.surname}"
+                                         required="true"/>
+                        </div>
+                        <div class="field grid">
+                            <p:outputLabel for="pwd1" styleClass="col-fixed" style="width:100px" value="Password"/>
+                            <div class="col">
+                                <p:password id="pwd1" value="#{headerController.currentUser.password}" match="pwd2"
+                                            label="Password 1" required="true" feedback="true"/>
+                            </div>
+                        </div>
+                        <div class="field grid">
+                            <p:outputLabel for="pwd2" styleClass="col-fixed" style="width:100px" value="Password"/>
+                            <div class="col">
+                                <p:password id="pwd2" value="#{headerController.currentUser.password}"
+                                            label="Password 2" placeholder="Please repeat your password!"
+                                            required="true"/>
+                            </div>
+                        </div>
+                        <div class="field grid">
+                            <p:outputLabel for="birthdayDlgInput">Birthday</p:outputLabel>
+                            <p:datePicker id="birthdayDlgInput"
+                                          value="#{headerController.currentUser.birthday}"/>
+                        </div>
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Cancel" icon="pi pi-times"
+                                     onclick="PF('manageUserDialog').hide()"
+                                     class="ui-button-secondary" type="button"/>
+                    <p:commandButton value="Save" icon="pi pi-check"
+                                     actionListener="#{headerController.saveUser}"
+                                     update="manage-user-content"
+                                     process="manage-user-content @this"/>
+                </f:facet>
+            </p:dialog>
         </h:form>
     </div>
 

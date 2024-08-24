@@ -128,10 +128,11 @@ public class LoginController implements Serializable {
         File file = new File("src/main/resources/META-INF/resources/images/" + image.getFileName());
         try {
             IOUtils.copy(image.getInputStream(), new FileOutputStream(file));
+            selectedUser.setImage(image.getFileName());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Image Uploaded!"));
         } catch (Exception e) {
             logger.error("handleFileUpload() =>" + e);
             throw new RuntimeException(e);
         }
-        selectedUser.setImage(image.getFileName());
     }
 }

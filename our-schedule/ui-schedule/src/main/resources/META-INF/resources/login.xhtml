@@ -59,13 +59,22 @@
             <p:outputPanel id="manage-user-content" class="ui-fluid">
                 <p:outputPanel rendered="#{loginController.selectedUser!=null}">
 
-                    <div class="field">
-                        <p:outputLabel for="picDlgInput">Profile picture</p:outputLabel>
-                        <p:fileUpload id="picDlgInput" listener="#{loginController.handleFileUpload}" mode="advanced"
-                                      dragDropSupport="true"
-                                      update=":form:msgs">
-                            <p:validateFile allowTypes="/(\.|\/)(gif|jpeg|jpg|png)$/"/>
-                        </p:fileUpload>
+                    <div style="display: flex; justify-content: space-between">
+                        <div class="field" style="align-self: center">
+                            <p:avatar styleClass="mr-2" shape="circle" size="xlarge">
+                                <p:graphicImage name="images/#{loginController.selectedUser.image}"
+                                                id="profile-pic"
+                                                style="vertical-align: middle"/>
+                            </p:avatar>
+                        </div>
+                        <div class="field">
+                            <p:fileUpload id="picDlgInput" listener="#{loginController.handleFileUpload}"
+                                          mode="advanced"
+                                          dragDropSupport="true"
+                                          update=":form:msgs :formDialogs:profile-pic">
+                                <p:validateFile allowTypes="/(\.|\/)(gif|jpeg|jpg|png)$/"/>
+                            </p:fileUpload>
+                        </div>
                     </div>
                     <div class="field">
                         <p:outputLabel for="nameDlgInput">Name</p:outputLabel>
