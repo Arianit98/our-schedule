@@ -107,4 +107,9 @@ public class AppointmentController implements Serializable {
         selectedAppointment = null;
         PrimeFaces.current().ajax().update("form:msgs", "form:appointmentsTable");
     }
+
+    public String getCurrentDateAsLabel() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("E, dd MMMM yyyy");
+        return dtf.format(selectedDate);
+    }
 }

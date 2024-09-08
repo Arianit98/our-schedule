@@ -12,21 +12,12 @@
 <h:body>
     <ui:include src="templates/header.xhtml"/>
 
-    <div class="card crud-demo" style="width: 70%; margin: auto">
+    <div class="card crud-demo" style="margin: auto">
         <h:form id="form">
-            <p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true"/>
-
-            <h:panelGrid columns="2" cellpadding="5" style="margin: auto">
-                <p:outputLabel for="inline" value=""/>
-                <p:calendar id="inline" value="#{appointmentController.selectedDate}" mode="inline">
-                    <p:ajax event="dateSelect" listener="#{appointmentController.onDateSelect}"
-                            update="appointmentsTable"/>
-                </p:calendar>
-            </h:panelGrid>
-
-            <p:toolbar>
+            <p:toolbar style="margin-top: 7px">
                 <p:toolbarGroup>
-                    <p:commandButton value="New" icon="pi pi-plus" actionListener="#{appointmentController.openNew}"
+                    <p:commandButton icon="pi pi-plus"
+                                     actionListener="#{appointmentController.openNew}"
                                      update=":dialogs:manage-appointment-content"
                                      oncomplete="PF('manageAppointmentDialog').show()"
                                      styleClass="ui-button-success" style="margin-right: .5rem">
@@ -34,65 +25,83 @@
                     </p:commandButton>
                 </p:toolbarGroup>
             </p:toolbar>
+            <div id="main" style="display: flex; justify-content: space-between">
+                <p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true"/>
 
-            <p:dataTable id="appointmentsTable" widgetVar="appointmentsTable" editable="true"
-                         var="appointment" value="#{appointmentController.getAppointmentsForDate()}"
-                         style="margin: auto;"
-                         reflow="true" styleClass="products-table" rowKey="#{appointment.id}">
+                <div id="appointments" style="margin: 7px 0 0 20px;">
+                    <p:outputLabel id="dateLabel"
+                                   value="#{appointmentController.getCurrentDateAsLabel()}"
+                                   style="font-size: 35px;"
+                    />
+                    <p:dataTable id="appointmentsTable" widgetVar="appointmentsTable" editable="true"
+                                 var="appointment" value="#{appointmentController.getAppointmentsForDate()}"
+                                 style="margin-top: 10px;"
+                                 reflow="true" styleClass="products-table" rowKey="#{appointment.id}">
 
-                <f:facet name="header">
-                    <div class="appointments-table-header">
-                        <span style="font-weight: bold">Appointments</span>
-                    </div>
-                </f:facet>
+                        <f:facet name="header">
+                            <div class="appointments-table-header">
+                                <span style="font-weight: bold">Appointments</span>
+                            </div>
+                        </f:facet>
 
-                <p:column headerText="Start" style="width: 7%">
-                    <h:outputText value="#{appointment.startTime}"/>
-                </p:column>
+                        <p:column headerText="Start" style="width: 7%">
+                            <h:outputText value="#{appointment.startTime}"/>
+                        </p:column>
 
-                <p:column headerText="End" style="width: 7%;">
-                    <h:outputText value="#{appointment.endTime}"/>
-                </p:column>
+                        <p:column headerText="End" style="width: 7%;">
+                            <h:outputText value="#{appointment.endTime}"/>
+                        </p:column>
 
-                <p:column headerText="Title">
-                    <h:outputText value="#{appointment.title}"/>
-                </p:column>
+                        <p:column headerText="Title">
+                            <h:outputText value="#{appointment.title}"/>
+                        </p:column>
 
-                <p:column headerText="Description">
-                    <h:outputText value="#{appointment.description}"/>
-                </p:column>
+                        <p:column headerText="Description">
+                            <h:outputText value="#{appointment.description}"/>
+                        </p:column>
 
-                <p:column headerText="Location">
-                    <h:outputText value="#{appointment.location}"/>
-                </p:column>
+                        <p:column headerText="Location">
+                            <h:outputText value="#{appointment.location}"/>
+                        </p:column>
 
-                <p:column style="width: 20%">
-                    <p:avatar styleClass="mr-2" shape="circle">
-                        <p:graphicImage name="images/#{appointmentController.currentUser.image}"
-                                        alt="#{appointmentController.currentUser.getInitials()}"
-                                        style="vertical-align: middle"/>
-                    </p:avatar>
-                    <h:outputText style="vertical-align: middle;margin-left: .5rem; font-size: 10px"
-                                  value="#{appointmentController.currentUser.name.concat(' ').concat(appointmentController.currentUser.surname)}"/>
-                </p:column>
+                        <p:column style="width: 15%">
+                            <p:avatar styleClass="mr-2" shape="circle">
+                                <p:graphicImage name="images/#{appointmentController.currentUser.image}"
+                                                alt="#{appointmentController.currentUser.getInitials()}"
+                                                style="vertical-align: middle"/>
+                            </p:avatar>
+                            <h:outputText style="vertical-align: middle;margin-left: .5rem; font-size: 10px"
+                                          value="#{appointmentController.currentUser.name.concat(' ').concat(appointmentController.currentUser.surname)}"/>
+                        </p:column>
 
-                <p:column exportable="false" ariaHeaderText="Actions">
-                    <p:commandButton icon="pi pi-pencil" update=":dialogs:manage-appointment-content"
-                                     oncomplete="PF('manageAppointmentDialog').show()"
-                                     styleClass="edit-button rounded-button ui-button-success" process="@this">
-                        <f:setPropertyActionListener value="#{appointment}"
-                                                     target="#{appointmentController.selectedAppointment}"/>
-                        <p:resetInput target=":dialogs:manage-appointment-content"/>
-                    </p:commandButton>
-                    <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
-                                     process="@this"
-                                     oncomplete="PF('deleteAppointmentDialog').show()">
-                        <f:setPropertyActionListener value="#{appointment}"
-                                                     target="#{appointmentController.selectedAppointment}"/>
-                    </p:commandButton>
-                </p:column>
+                        <p:column exportable="false" ariaHeaderText="Actions">
+                            <p:commandButton icon="pi pi-pencil" update=":dialogs:manage-appointment-content"
+                                             oncomplete="PF('manageAppointmentDialog').show()"
+                                             styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                <f:setPropertyActionListener value="#{appointment}"
+                                                             target="#{appointmentController.selectedAppointment}"/>
+                                <p:resetInput target=":dialogs:manage-appointment-content"/>
+                            </p:commandButton>
+                            <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
+                                             process="@this"
+                                             oncomplete="PF('deleteAppointmentDialog').show()">
+                                <f:setPropertyActionListener value="#{appointment}"
+                                                             target="#{appointmentController.selectedAppointment}"/>
+                            </p:commandButton>
+                        </p:column>
 
-            </p:dataTable>
+                    </p:dataTable>
+                </div>
+                <div id="calendar">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <p:outputLabel for="inline" value=""/>
+                        <p:calendar id="inline" value="#{appointmentController.selectedDate}" mode="inline">
+                            <p:ajax event="dateSelect" listener="#{appointmentController.onDateSelect}"
+                                    update="appointmentsTable dateLabel"/>
+                        </p:calendar>
+                    </h:panelGrid>
+                </div>
+            </div>
         </h:form>
 
         <h:form id="dialogs">
