@@ -38,7 +38,7 @@ public class UsernameValidator implements Validator {
 
     @Override
     public void validate(FacesContext facesContext, UIComponent uiComponent, Object o) throws ValidatorException {
-        String username = (String) uiComponent.getAttributes().get("username");
+        String username = (String) o;
         if (username != null && usernameExists(username)) {
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Username already exists!", ""));
         }

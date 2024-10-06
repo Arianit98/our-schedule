@@ -10,8 +10,8 @@
 <h:body>
     <div id="container"
          style="display: flex; justify-content: center; align-content: center; flex-direction: row">
-        <div class="card" style="width: 400px; height: 200px;">
-            <h:form id="form" style="width:300px; margin-bottom: 10px; margin-top: 50px">
+        <div class="card" style="width: 300px; height: 20%;">
+            <h:form id="form" style="width:300px; align-self: center; margin-bottom: 10px; margin-top: 50px">
                 <p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true"/>
 
                 <h1 style="text-align: center">Our Schedule</h1>
@@ -49,44 +49,27 @@
                     </div>
                 </div>
             </h:form>
-
         </div>
     </div>
-    <h:form id="formDialogs">
-        <p:dialog header="User Details" showEffect="fade" modal="true"
+    <h:form id="formDialogs" style="max-width: 40%">
+        <p:dialog header="Sign Up!" showEffect="fade" modal="true"
                   widgetVar="manageUserDialog"
                   responsive="true">
             <p:outputPanel id="manage-user-content" class="ui-fluid">
                 <p:outputPanel rendered="#{loginController.selectedUser!=null}">
-
                     <div style="display: flex; justify-content: space-between">
-                        <div class="field" style="align-self: center">
-                            <p:avatar styleClass="mr-2" shape="circle" size="xlarge">
-                                <p:graphicImage name="images/#{loginController.selectedUser.image}"
-                                                id="profile-pic"
-                                                style="vertical-align: middle"/>
-                            </p:avatar>
+                        <div class="field">
+                            <p:outputLabel for="nameDlgInput">First Name</p:outputLabel>
+                            <p:inputText id="nameDlgInput"
+                                         value="#{loginController.selectedUser.name}"
+                                         required="true"/>
                         </div>
                         <div class="field">
-                            <p:fileUpload id="picDlgInput" listener="#{loginController.handleFileUpload}"
-                                          mode="advanced"
-                                          dragDropSupport="true"
-                                          update=":form:msgs :formDialogs:profile-pic">
-                                <p:validateFile allowTypes="/(\.|\/)(gif|jpeg|jpg|png)$/"/>
-                            </p:fileUpload>
+                            <p:outputLabel for="surnameDlgInput">Last Name</p:outputLabel>
+                            <p:inputText id="surnameDlgInput"
+                                         value="#{loginController.selectedUser.surname}"
+                                         required="true"/>
                         </div>
-                    </div>
-                    <div class="field">
-                        <p:outputLabel for="nameDlgInput">Name</p:outputLabel>
-                        <p:inputText id="nameDlgInput"
-                                     value="#{loginController.selectedUser.name}"
-                                     required="true"/>
-                    </div>
-                    <div class="field">
-                        <p:outputLabel for="surnameDlgInput">Surname</p:outputLabel>
-                        <p:inputText id="surnameDlgInput"
-                                     value="#{loginController.selectedUser.surname}"
-                                     required="true"/>
                     </div>
                     <div class="field">
                         <p:outputLabel for="emailDlgInput">Email</p:outputLabel>
@@ -127,10 +110,7 @@
             </p:outputPanel>
 
             <f:facet name="footer">
-                <p:commandButton value="Cancel" icon="pi pi-times"
-                                 onclick="PF('manageUserDialog').hide()"
-                                 class="ui-button-secondary" type="button"/>
-                <p:commandButton value="Save" icon="pi pi-check"
+                <p:commandButton value="Sign Up" icon="pi pi-check"
                                  actionListener="#{loginController.saveUser}"
                                  update="manage-user-content"
                                  process="manage-user-content @this"/>
