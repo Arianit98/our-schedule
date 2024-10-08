@@ -5,12 +5,28 @@
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core">
 
     <div class="card">
+        <p:sidebar widgetVar="sidebar1">
+            <ul>
+                <li>
+                    <h4>
+                        Calendar 1
+                    </h4>
+                </li>
+                <li>
+                    <h4>
+                        Calendar 2
+                    </h4>
+                </li>
+            </ul>
+        </p:sidebar>
         <h:form>
             <p:growl id="msgs"/>
 
             <p:menubar>
-
-                <p:submenu label="#{appointmentController.currentUser.name}" icon="pi pi-fw pi-user">
+                <p:menuitem onclick="PF('sidebar1').show()" icon="pi pi-calendar"/>
+                <p:divider layout="vertical"/>
+                <p:submenu label="#{appointmentController.currentUser.name}" icon="pi pi-fw pi-user"
+                           style="float: right">
                     <p:menuitem value="Edit Account" icon="pi pi-pencil"
                                 update=":formDialogs:manage-user-content"
                                 oncomplete="PF('manageUserDialog').show()"
@@ -21,8 +37,6 @@
                                          styleClass="ui-button-info"/>
                     </p:menuitem>
                 </p:submenu>
-
-                <p:divider layout="vertical"/>
             </p:menubar>
         </h:form>
         <h:form id="formDialogs">
