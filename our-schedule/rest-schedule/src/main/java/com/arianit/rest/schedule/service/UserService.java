@@ -35,6 +35,7 @@ public class UserService {
         entity.password = user.password;
         entity.birthday = user.birthday;
         entity.active = user.active;
+        entity.image = user.image;
         return entity;
     }
 

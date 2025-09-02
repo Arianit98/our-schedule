@@ -66,7 +66,7 @@
 
                         <p:column style="width: 15%">
                             <p:avatar styleClass="mr-2" shape="circle">
-                                <p:graphicImage name="images/#{appointmentController.currentUser.image}"
+                                <p:graphicImage value="#{appointmentController.currentUser.image}"
                                                 alt="#{appointmentController.currentUser.getInitials()}"
                                                 style="vertical-align: middle"/>
                             </p:avatar>
@@ -89,7 +89,6 @@
                                                              target="#{appointmentController.selectedAppointment}"/>
                             </p:commandButton>
                         </p:column>
-
                     </p:dataTable>
                 </div>
                 <div id="calendar">

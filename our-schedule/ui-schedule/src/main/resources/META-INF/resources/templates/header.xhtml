@@ -10,14 +10,14 @@
 
             <p:menubar>
 
-                <p:submenu label="#{appointmentController.currentUser.name}" icon="pi pi-fw pi-user">
+                <p:submenu label="#{headerController.currentUser.name}" icon="pi pi-fw pi-user">
                     <p:menuitem value="Edit Account" icon="pi pi-pencil"
                                 update=":formDialogs:manage-user-content"
                                 oncomplete="PF('manageUserDialog').show()"
                                 styleClass="edit-button rounded-button ui-button-success" process="@this">
                     </p:menuitem>
                     <p:menuitem>
-                        <p:commandButton value="Logout" icon="pi pi-fw pi-sign-out" action="#{headerController.logout}"
+                        <p:commandButton value="Logout" icon="pi pi-fw pi-sign-out" action="#{loginController.logout}"
                                          styleClass="ui-button-info"/>
                     </p:menuitem>
                 </p:submenu>
@@ -36,9 +36,9 @@
                         <div style="display: flex; justify-content: space-between">
                             <div class="field" style="align-self: center">
                                 <p:avatar styleClass="mr-2" shape="circle" size="xlarge">
-                                    <p:graphicImage name="images/#{appointmentController.currentUser.image}"
+                                    <p:graphicImage value="#{headerController.currentUser.image}"
                                                     id="profile-pic"
-                                                    alt="#{appointmentController.currentUser.getInitials()}"
+                                                    alt="#{headerController.currentUser.getInitials()}"
                                                     style="vertical-align: middle"/>
                                 </p:avatar>
                             </div>
@@ -48,7 +48,6 @@
                                               chooseButtonTitle="Choose profile pic"
                                               dragDropSupport="true"
                                               update=":form:msgs :formDialogs:profile-pic">
-                                    <p:validateFile allowTypes="/(\.|\/)(gif|jpeg|jpg|png)$/"/>
                                 </p:fileUpload>
                             </div>
                         </div>
@@ -92,7 +91,7 @@
                                      onclick="PF('manageUserDialog').hide()"
                                      class="ui-button-secondary" type="button"/>
                     <p:commandButton value="Save" icon="pi pi-check"
-                                     actionListener="#{headerController.saveUser}"
+                                     actionListener="#{userController.updateUser}"
                                      update="manage-user-content"
                                      process="manage-user-content @this"/>
                 </f:facet>

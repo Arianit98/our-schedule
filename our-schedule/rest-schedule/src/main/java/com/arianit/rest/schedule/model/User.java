@@ -25,7 +25,7 @@ public class User extends PanacheEntity {
     public String password;
     public LocalDate birthday;
     public Boolean active = true;
-    public String image;
+    public byte[] image;
 
     @Override
     public boolean equals(Object o) {
@@ -37,7 +37,7 @@ public class User extends PanacheEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, username, email, password, birthday, active, image);
+        return Objects.hash(name, surname, username, email, password, birthday, active);
     }
 
     @Override
@@ -50,7 +50,6 @@ public class User extends PanacheEntity {
                 ", password='" + password + '\'' +
                 ", birthday=" + birthday +
                 ", active=" + active +
-                ", image='" + image + '\'' +
                 ", id=" + id +
                 '}';
     }

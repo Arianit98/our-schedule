@@ -12,9 +12,13 @@
 package com.arianit.ui.schedule.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
+@Getter
+@Setter
 public class User {
 
     @JsonProperty("id")
@@ -42,7 +46,7 @@ public class User {
     private Boolean active;
 
     @JsonProperty("image")
-    private String image;
+    private byte[] image;
 
     /**
      * Convert the given object to string with each line indented by 4 spaces
@@ -53,195 +57,6 @@ public class User {
             return "null";
         }
         return o.toString().replace("\n", "\n    ");
-    }
-
-    /**
-     * Get id
-     *
-     * @return id
-     **/
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * Set id
-     **/
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User id(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return name
-     **/
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Set name
-     **/
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public User name(String name) {
-        this.name = name;
-        return this;
-    }
-
-    /**
-     * Get surname
-     *
-     * @return surname
-     **/
-    public String getSurname() {
-        return surname;
-    }
-
-    /**
-     * Set surname
-     **/
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public User surname(String surname) {
-        this.surname = surname;
-        return this;
-    }
-
-    /**
-     * Get username
-     *
-     * @return username
-     **/
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * Set username
-     **/
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public User username(String username) {
-        this.username = username;
-        return this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return email
-     **/
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     * Set email
-     **/
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public User email(String email) {
-        this.email = email;
-        return this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return password
-     **/
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * Set password
-     **/
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public User password(String password) {
-        this.password = password;
-        return this;
-    }
-
-    /**
-     * Get birthday
-     *
-     * @return birthday
-     **/
-    public LocalDate getBirthday() {
-        return birthday;
-    }
-
-    /**
-     * Set birthday
-     **/
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
-    }
-
-    public User birthday(LocalDate birthday) {
-        this.birthday = birthday;
-        return this;
-    }
-
-    /**
-     * Get active
-     *
-     * @return active
-     **/
-    public Boolean getActive() {
-        return active;
-    }
-
-    /**
-     * Set active
-     **/
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public User active(Boolean active) {
-        this.active = active;
-        return this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return image
-     **/
-    public String getImage() {
-        return image;
-    }
-
-    /**
-     * Set active
-     **/
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public User image(String image) {
-        this.image = image;
-        return this;
     }
 
     public String getInitials() {
@@ -264,7 +79,6 @@ public class User {
         sb.append("    password: ").append(toIndentedString(password)).append("\n");
         sb.append("    birthday: ").append(toIndentedString(birthday)).append("\n");
         sb.append("    active: ").append(toIndentedString(active)).append("\n");
-        sb.append("    image: ").append(toIndentedString(image)).append("\n");
         sb.append("}");
         return sb.toString();
     }
