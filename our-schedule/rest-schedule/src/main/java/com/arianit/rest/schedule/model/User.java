@@ -2,6 +2,7 @@ package com.arianit.rest.schedule.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -26,6 +28,8 @@ public class User extends PanacheEntity {
     public LocalDate birthday;
     public Boolean active = true;
     public String image;
+    @OneToMany
+    public List<Appointment> appointments;
 
     @Override
     public boolean equals(Object o) {

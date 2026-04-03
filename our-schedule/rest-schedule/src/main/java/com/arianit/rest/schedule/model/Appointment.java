@@ -2,7 +2,6 @@ package com.arianit.rest.schedule.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,8 +25,6 @@ public class Appointment extends PanacheEntity {
     public LocalDate date;
     public LocalTime startTime;
     public LocalTime endTime;
-    @ManyToOne
-    public User user;
 
     @Override
     public boolean equals(Object o) {
@@ -39,7 +36,7 @@ public class Appointment extends PanacheEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, description, location, date, startTime, endTime, user);
+        return Objects.hash(title, description, location, date, startTime, endTime);
     }
 
     @Override
@@ -51,7 +48,6 @@ public class Appointment extends PanacheEntity {
                 ", date=" + date +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
-                ", user=" + user +
                 ", id=" + id +
                 '}';
     }
