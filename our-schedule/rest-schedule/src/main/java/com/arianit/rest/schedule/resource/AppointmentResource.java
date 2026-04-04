@@ -1,6 +1,6 @@
 package com.arianit.rest.schedule.resource;
 
-import com.arianit.rest.schedule.model.Appointment;
+import com.arianit.rest.schedule.entity.Appointment;
 import com.arianit.rest.schedule.service.AppointmentService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

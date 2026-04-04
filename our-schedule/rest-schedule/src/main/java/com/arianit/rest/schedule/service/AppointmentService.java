@@ -1,6 +1,6 @@
 package com.arianit.rest.schedule.service;
 
-import com.arianit.rest.schedule.model.Appointment;
+import com.arianit.rest.schedule.entity.Appointment;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;

@@ -1,6 +1,6 @@
 package com.arianit.rest.schedule.service;
 
-import com.arianit.rest.schedule.model.User;
+import com.arianit.rest.schedule.entity.User;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -32,9 +32,7 @@ public class UserService {
         entity.surname = user.surname;
         entity.username = user.username;
         entity.email = user.email;
-        entity.password = user.password;
         entity.birthday = user.birthday;
-        entity.active = user.active;
         return entity;
     }
 
