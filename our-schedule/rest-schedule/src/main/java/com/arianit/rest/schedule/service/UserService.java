@@ -7,9 +7,11 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.core.Response;
 import org.keycloak.admin.client.Keycloak;
+import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.representations.idm.UserRepresentation;
 
 import java.util.List;
+import java.util.Objects;
 
 @ApplicationScoped
 @Transactional(Transactional.TxType.REQUIRED)
@@ -56,11 +58,27 @@ public class UserService {
         if (entity == null) {
             throw new RuntimeException("Failed to find user: " + user.id);
         }
+        UserResource keycloakUser = keycloak.realm("schedule").users().get(entity.getSubjectId());
+        UserRepresentation userRepresentation = keycloakUser.toRepresentation();
+        if (userRepresentation == null) {
+            throw new RuntimeException("Failed to find user in Keycloak: " + entity.getSubjectId());
+        }
+
+        keycloakUser.update(new UserRepresentation() {{
+            if (!Objects.equals(user.getEmail(), userRepresentation.getEmail())) {
+                setRequiredActions(List.of("CONFIRM_EMAIL"));
+            }
+            setUsername(user.getUsername());
+            setEmail(user.getEmail());
+            setFirstName(user.getName());
+            setLastName(user.getSurname());
+        }});
         entity.name = user.name;
         entity.surname = user.surname;
         entity.username = user.username;
         entity.email = user.email;
         entity.birthday = user.birthday;
+        //TODO: check if user is updated
         return entity;
     }
 
