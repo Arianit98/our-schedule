@@ -11,7 +11,6 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -24,7 +23,7 @@ public class User extends PanacheEntity {
     public String surname;
     public String username;
     public String email;
-    public UUID subjectId;
+    public String subjectId;
     public LocalDate birthday;
     public String image;
     @OneToMany
