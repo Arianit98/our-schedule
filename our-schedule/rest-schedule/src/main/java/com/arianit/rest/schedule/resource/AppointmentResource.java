@@ -39,9 +39,9 @@ public class AppointmentResource {
     }
 
     @GET
-    @Path("{appointment_id}")
+    @Path("/{id}")
     @RolesAllowed("user")
-    public Response getAppointment(@PathParam("appointment_id") Long appointmentId) {
+    public Response getAppointment(@PathParam("id") Long appointmentId) {
         Appointment appointment = service.findAppointmentById(getCurrentUser().id, appointmentId);
         if (appointment != null) {
             logger.debug("Found appointment " + appointment);
