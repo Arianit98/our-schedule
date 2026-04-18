@@ -32,7 +32,7 @@ public class UsernameValidator implements Validator {
             users = api.apiUsersGet();
         } catch (ApiException e) {
             logger.error("init() =>" + e);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Could not get users!"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Could not get user!"));
         }
     }
 
